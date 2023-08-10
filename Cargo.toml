@@ -1,0 +1,43 @@
+[package]
+name = "polars-cli"
+version = "0.3.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/pola-rs/polars-cli"
+description = "CLI interface for running SQL queries with Polars as backend"
+
+[[bin]]
+name = "polars"
+path = "src/main.rs"
+
+[dependencies]
+atty = "0.2"
+ciborium = "0.2"
+clap = { version = "4.2.2", features = ["derive", "cargo"] }
+nu-ansi-term = { version = "0.49", optional = true }
+once_cell = "1"
+reedline = { git = "https://github.com/nushell/reedline", rev = "e7ee24a2b01d041feefb5eb58ba2377a20412f94" }
+serde = { version = "1.0.160", features = ["derive"] }
+sqlparser = "0.36"
+tmp_env = "0.1.1"
+
+[dependencies.polars]
+git = "https://github.com/pola-rs/polars"
+rev = "1494033bdc5af181339515020be3c01302fbbbb4"
+features = ["lazy", "sql", "dtype-full", "serde-lazy"]
+
+[target.'cfg(target_os = "linux")'.dependencies]
+jemallocator = { version = "0.5", features = ["disable_initial_exec_tls"] }
+
+[features]
+default = ["highlight", "parquet", "json", "ipc"]
+
+highlight = ["nu-ansi-term"]
+ipc = ["polars/ipc"]
+json = ["polars/json"]
+parquet = ["polars/parquet"]
+
+[profile.release]
+strip = true
+lto = true
+panic = "abort"

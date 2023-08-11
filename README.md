@@ -10,7 +10,7 @@ cargo install --locked --path .
 
 ```bash
 > polars
-Polars CLI v0.3.0
+Polars CLI version 0.3.0
 Type .help for help.
 >> .help
 ┌─────────┬────────────────────┐

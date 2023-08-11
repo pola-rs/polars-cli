@@ -37,7 +37,7 @@ fn colorize_sql(query: &str, st: &mut StyledText) -> std::io::Result<()> {
 
                 st.push((Style::new(), s2.to_string()));
                 return Ok(());
-            }
+            },
         }
     }
     let tokens = tokens.unwrap();
@@ -51,7 +51,7 @@ fn colorize_sql(query: &str, st: &mut StyledText) -> std::io::Result<()> {
             Token::SemiColon => st.push((Style::new().fg(Color::White).bold(), ";".to_string())),
             Token::SingleQuotedString(s) => {
                 st.push((Style::new().fg(Color::Yellow).italic(), format!("'{}'", s)))
-            }
+            },
             Token::DoubleQuotedString(s) => st.push((
                 Style::new().fg(Color::Yellow).italic(),
                 format!("\"{}\"", s),
@@ -95,23 +95,23 @@ fn colorize_sql(query: &str, st: &mut StyledText) -> std::io::Result<()> {
                 | Keyword::IN
                 | Keyword::WITH => {
                     st.push((Style::new().fg(Color::LightGreen), format!("{w}")));
-                }
+                },
                 _ => match w.to_string().as_str() {
                     s if all_functions().contains(&s) => {
                         st.push((Style::new().fg(Color::LightCyan).bold(), format!("{w}")))
-                    }
+                    },
                     s if all_keywords().contains(&s) => {
                         st.push((Style::new().fg(Color::LightGreen), format!("{w}")))
-                    }
+                    },
                     s if PolarsCommand::keywords().contains(&s) => {
                         st.push((Style::new().fg(Color::LightGray).bold(), format!("{w}")))
-                    }
+                    },
                     _ => st.push((Style::new(), format!("{w}"))),
                 },
             },
             other => {
                 st.push((Style::new(), format!("{other}")));
-            }
+            },
         }
     }
     Ok(())

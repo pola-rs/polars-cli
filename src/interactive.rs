@@ -75,10 +75,10 @@ pub(super) enum PolarsCommand {
 impl PolarsCommand {
     fn execute_and_print(&self, ctx: &mut SQLContext) {
         match self.execute(ctx) {
-            Ok(_) => {}
+            Ok(_) => {},
             Err(e) => {
                 eprintln!("Error: {}", e);
-            }
+            },
         }
     }
     fn execute(&self, ctx: &mut SQLContext) -> std::io::Result<()> {
@@ -86,7 +86,7 @@ impl PolarsCommand {
             PolarsCommand::Help => {
                 print_help();
                 Ok(())
-            }
+            },
             PolarsCommand::Exit => Ok(()),
             PolarsCommand::Save(buf) => {
                 let serializable_ctx: SerializableContext = ctx.into();
@@ -101,7 +101,7 @@ impl PolarsCommand {
                 *ctx = serializable_ctx.into();
                 std::fs::write(buf, w)?;
                 Ok(())
-            }
+            },
             PolarsCommand::Open(buf) => {
                 let db = std::fs::read(buf)?;
                 let cursor = Cursor::new(db);
@@ -114,11 +114,11 @@ impl PolarsCommand {
                     })?;
                 *ctx = serializable_ctx.into();
                 Ok(())
-            }
+            },
             PolarsCommand::Unknown(cmd) => {
                 println!(r#"Unknown command: "{cmd}".  Enter ".help" for help"#);
                 Ok(())
-            }
+            },
         }
     }
 }
@@ -178,7 +178,7 @@ pub(super) fn run_tty(output_mode: OutputMode) -> std::io::Result<()> {
                         };
 
                         cmd.execute_and_print(&mut context)
-                    }
+                    },
                     _ => {
                         let mut parts = buffer.splitn(2, ';');
                         let first = parts.next().unwrap();
@@ -191,19 +191,19 @@ pub(super) fn run_tty(output_mode: OutputMode) -> std::io::Result<()> {
                         } else {
                             scratch.push(' ');
                         }
-                    }
+                    },
                 }
-            }
+            },
             Ok(Signal::CtrlD) | Ok(Signal::CtrlC) => {
                 if is_exit_cmd {
                     break;
                 } else {
                     is_exit_cmd = true;
                 }
-            }
+            },
             _ => {
                 is_exit_cmd = false;
-            }
+            },
         }
     }
     Ok(())

@@ -8,21 +8,12 @@
 cargo install --locked --path .
 ```
 
-```bash
-> polars
+```shell
+$ polars
 Polars CLI version 0.3.0
 Type .help for help.
->> .help
-┌─────────┬────────────────────┐
-│ command ┆ description        │
-╞═════════╪════════════════════╡
-│ .help   ┆ Display this help │
-│ .exit   ┆ Exit this program  │
-└─────────┴────────────────────┘
-shape: (2, 2)
 
 >> select * FROM read_csv('examples/datasets/foods1.csv');
-shape: (27, 4)
 ┌────────────┬──────────┬────────┬──────────┐
 │ category   ┆ calories ┆ fats_g ┆ sugars_g │
 │ ---        ┆ ---      ┆ ---    ┆ ---      │
@@ -33,10 +24,10 @@ shape: (27, 4)
 │ meat       ┆ 100      ┆ 5.0    ┆ 0        │
 │ fruit      ┆ 60       ┆ 0.0    ┆ 11       │
 │ …          ┆ …        ┆ …      ┆ …        │
-│ fruit      ┆ 130      ┆ 0.0    ┆ 25       │
-│ meat       ┆ 100      ┆ 7.0    ┆ 0        │
-│ vegetables ┆ 30       ┆ 0.0    ┆ 5        │
-│ fruit      ┆ 50       ┆ 0.0    ┆ 11       │
+│ seafood    ┆ 200      ┆ 10.0   ┆ 0        │
+│ seafood    ┆ 200      ┆ 7.0    ┆ 2        │
+│ fruit      ┆ 60       ┆ 0.0    ┆ 11       │
+│ meat       ┆ 110      ┆ 7.0    ┆ 0        │
 └────────────┴──────────┴────────┴──────────┘
 ```
 
@@ -44,8 +35,6 @@ Or pipe your SQL command directly inline:
 
 ```bash
 $ echo "SELECT category FROM read_csv('examples/datasets/foods1.csv')" | polars
-
-shape: (27, 1)
 ┌────────────┐
 │ category   │
 │ ---        │
@@ -56,10 +45,10 @@ shape: (27, 1)
 │ meat       │
 │ fruit      │
 │ …          │
+│ seafood    │
+│ seafood    │
 │ fruit      │
 │ meat       │
-│ vegetables │
-│ fruit      │
 └────────────┘
 ```
 

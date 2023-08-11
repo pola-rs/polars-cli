@@ -155,7 +155,7 @@ pub(super) fn run_tty(output_mode: OutputMode) -> std::io::Result<()> {
 
     let mut context = SQLContext::new();
 
-    println!("Polars CLI v{}", crate_version!());
+    println!("Polars CLI version {}", crate_version!());
     println!("Type .help for help.");
 
     let prompt = SQLPrompt {};

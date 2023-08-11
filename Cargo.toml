@@ -23,7 +23,7 @@ tmp_env = "0.1.1"
 
 [dependencies.polars]
 git = "https://github.com/pola-rs/polars"
-rev = "1494033bdc5af181339515020be3c01302fbbbb4"
+branch = "main"
 features = ["lazy", "sql", "dtype-full", "serde-lazy"]
 
 [target.'cfg(target_os = "linux")'.dependencies]

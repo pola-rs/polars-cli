@@ -1,0 +1,74 @@
+name-template: $RESOLVED_VERSION
+tag-template: $RESOLVED_VERSION
+
+version-resolver:
+  minor:
+    labels:
+      - breaking
+  default: patch
+
+categories:
+  - title: 🏆 Highlights
+    labels: highlight
+  - title: 💥 Breaking changes
+    labels: breaking
+  - title: ⚠️ Deprecations
+    labels: deprecation
+  - title: ✨ Enhancements
+    labels:
+      - enhancement
+      - performance
+  - title: 🐞 Bug fixes
+    labels: fix
+  - title: 🛠️ Other improvements
+    labels:
+      - build
+      - documentation
+      - internal
+      - release
+
+exclude-labels:
+  - skip changelog
+
+change-template: '- $TITLE (#$NUMBER)'
+change-title-escapes: '\<*_&'
+replacers:
+  # Remove conventional commits from titles
+  - search: '/- (build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\(.*\))?(\!)?\: /g'
+    replace: '- '
+
+autolabeler:
+  - label: breaking
+    title:
+      # Example: feat!: ...
+      - '/^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\(.*\))?\!\: /'
+  - label: build
+    title:
+      - '/^build/'
+  - label: internal
+    title:
+      - '/^(chore|ci|refactor|test)/'
+  - label: deprecation
+    title:
+      - '/^depr/'
+  - label: documentation
+    title:
+      - '/^docs/'
+  - label: enhancement
+    title:
+      - '/^feat/'
+  - label: fix
+    title:
+      - '/^fix/'
+  - label: performance
+    title:
+      - '/^perf/'
+  - label: release
+    title:
+      - '/^release/'
+
+template: |
+  $CHANGES
+
+  Thank you to all our contributors for making this release possible!
+  $CONTRIBUTORS

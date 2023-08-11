@@ -75,7 +75,7 @@ impl OutputMode {
 
                     use std::io::Write;
                     return write!(&mut w, "{df}");
-                }
+                },
                 OutputMode::Markdown => {
                     let _tmp_env = (
                         tmp_env::set_var("POLARS_FMT_TABLE_FORMATTING", "ASCII_MARKDOWN"),
@@ -83,16 +83,16 @@ impl OutputMode {
                     );
                     use std::io::Write;
                     return write!(&mut w, "{df}");
-                }
+                },
             }
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e))
         };
 
         match execute_inner() {
-            Ok(_) => {}
+            Ok(_) => {},
             Err(e) => {
                 eprintln!("Error: {}", e);
-            }
+            },
         }
     }
 }

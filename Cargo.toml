@@ -16,7 +16,7 @@ ciborium = "0.2"
 clap = { version = "4.2.2", features = ["derive", "cargo"] }
 nu-ansi-term = { version = "0.49", optional = true }
 once_cell = "1"
-reedline = { git = "https://github.com/nushell/reedline", rev = "e7ee24a2b01d041feefb5eb58ba2377a20412f94" }
+reedline = "0.22"
 serde = { version = "1.0.160", features = ["derive"] }
 sqlparser = "0.36"
 tmp_env = "0.1.1"

@@ -1,5 +1,16 @@
 # Polars CLI
 
+## 🚀 Get started
+
+```bash
+cargo +nightly install polars-cli
+```
+
+Prerequisites
+1. `rustup`: which provides the `cargo` executable. You can get it from the [official website](https://rustup.rs/).
+2. `rustup install nightly` - The `nightly` version of rust, since some of our dependencies use unstable features.
+
+
 ## CLI
 
 **Build from source**

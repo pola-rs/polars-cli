@@ -25,7 +25,6 @@ categories:
       - build
       - documentation
       - internal
-      - release
 
 exclude-labels:
   - skip changelog
@@ -63,12 +62,6 @@ autolabeler:
   - label: performance
     title:
       - '/^perf/'
-  - label: release
-    title:
-      - '/^release/'
 
 template: |
   $CHANGES
-
-  Thank you to all our contributors for making this release possible!
-  $CONTRIBUTORS

@@ -3,7 +3,7 @@
 ## 🚀 Get started
 
 ```bash
-cargo +nightly install polars-cli
+cargo +nightly install polars-cli --locked
 ```
 
 Prerequisites

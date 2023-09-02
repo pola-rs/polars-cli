@@ -21,5 +21,5 @@ updates:
       - dependency-name: '*'
         update-types: ['version-update:semver-patch']
     commit-message:
-      prefix: build!
+      prefix: 'build!:'
       prefix-development: chore

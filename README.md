@@ -4,8 +4,11 @@
 
 Until binaries are available, the only way to install the Polars CLI is by building it from source:
 
+With a recent version of rustc it's possible to install polars-cli.
 ```bash
-cargo +nightly install --locked polars-cli
+$ rustc --version
+rustc 1.72.0 (5680fa18f 2023-08-23)
+$ cargo install --locked polars-cli
 ```
 
 Alternatively, clone the repository and install the latest version on the main branch:
@@ -17,7 +20,6 @@ cargo install --locked --path .
 #### Prerequisites
 
 1. `rustup`: which provides the `cargo` executable. You can get it from the [official website](https://rustup.rs/).
-2. `rustup install nightly` - The `nightly` version of rust, since some of our dependencies use unstable features.
 
 ## Usage
 

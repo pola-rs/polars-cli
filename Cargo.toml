@@ -16,7 +16,7 @@ ciborium = "0.2"
 clap = { version = "4.4.2", features = ["derive", "cargo"] }
 nu-ansi-term = { version = "0.49", optional = true }
 once_cell = "1"
-reedline = "0.23"
+reedline = "0.24"
 serde = { version = "1.0.160", features = ["derive"] }
 sqlparser = "0.37"
 tmp_env = "0.1.1"

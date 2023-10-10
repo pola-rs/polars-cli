@@ -1285,7 +1285,7 @@ dependencies = [
  "polars",
  "reedline",
  "serde",
- "sqlparser 0.37.0",
+ "sqlparser",
  "tmp_env",
 ]
 
@@ -1506,7 +1506,7 @@ dependencies = [
  "rand",
  "serde",
  "serde_json",
- "sqlparser 0.38.0",
+ "sqlparser",
 ]
 
 [[package]]
@@ -1870,15 +1870,6 @@ checksum = "4031e820eb552adee9295814c0ced9e5cf38ddf1e8b7d566d6de8e2538ea989e"
 dependencies = [
  "libc",
  "windows-sys",
-]
-
-[[package]]
-name = "sqlparser"
-version = "0.37.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "37ae05a8250b968a3f7db93155a84d68b2e6cea1583949af5ca5b5170c76c075"
-dependencies = [
- "log",
 ]
 
 [[package]]

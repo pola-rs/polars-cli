@@ -152,8 +152,7 @@ jobs:
           name: binaries
           path: binaries
 
-      # TODO: Publish only after uploading binaries
-      - name: Create and publish GitHub release
+      - name: Create GitHub release
         id: github-release
         uses: release-drafter/release-drafter@v5
         with:
@@ -163,15 +162,20 @@ jobs:
           version: ${{ needs.get-version.outputs.version }}
           prerelease: ${{ needs.get-version.outputs.is-prerelease }}
           commitish: ${{ inputs.sha }}
-          publish: ${{ inputs.dry-run == false }}
           disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload binaries to GitHub release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          file: binaries/*
-          file_glob: true
-          tag: ${{ steps.github-release.outputs.tag_name }}
-          overwrite: true
+        run: gh release upload $TAG $FILES --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.github-release.outputs.tag_name }}
+          FILES: binaries/*
+
+      - name: Publish GitHub release
+        if: inputs.dry-run == false
+        run: gh release edit $TAG --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.github-release.outputs.tag_name }}

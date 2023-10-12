@@ -22,8 +22,7 @@ sqlparser = "0.38"
 tmp_env = "0.1.1"
 
 [dependencies.polars]
-git = "https://github.com/pola-rs/polars"
-branch = "main"
+version = ">=0.33.0"
 features = ["lazy", "sql", "dtype-full", "serde-lazy"]
 
 [target.'cfg(target_os = "linux")'.dependencies]

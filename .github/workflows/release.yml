@@ -167,15 +167,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload binaries to GitHub release
-        run: gh release upload $VERSION $FILES --clobber
+        run: gh release upload $TAG $FILES --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ needs.get-version.outputs.version }}
+          TAG: ${{ steps.github-release.outputs.tag_name }}
           FILES: binaries/*
 
       - name: Publish GitHub release
         if: inputs.dry-run == false
-        run: gh release edit $VERSION --draft=false
+        run: gh release edit $TAG --draft=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ needs.get-version.outputs.version }}
+          TAG: ${{ steps.github-release.outputs.tag_name }}

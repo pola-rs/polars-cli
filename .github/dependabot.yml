@@ -11,15 +11,3 @@ updates:
     commit-message:
       prefix: ci
     labels: ['skip changelog']
-
-  # Rust
-  - package-ecosystem: cargo
-    directory: '/'
-    schedule:
-      interval: monthly
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-patch']
-    commit-message:
-      prefix: 'build!:'
-      prefix-development: chore

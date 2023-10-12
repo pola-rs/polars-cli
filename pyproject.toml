@@ -1,0 +1,43 @@
+[build-system]
+requires = ["maturin>=1.2.1,<2"]
+build-backend = "maturin"
+
+[project]
+name = "polars-cli"
+description = "CLI interface for running SQL queries with Polars as backend"
+readme = "README.md"
+authors = [
+  { name = "Ritchie Vink", email = "ritchie46@gmail.com" },
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+
+keywords = ["dataframe", "arrow", "out-of-core", "sql"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Rust",
+  "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+Homepage = "https://www.pola.rs/"
+Documentation = "https://github.com/pola-rs/polars-cli"
+Repository = "https://github.com/pola-rs/polars-cli"
+Changelog = "https://github.com/pola-rs/polars-cli/releases"
+
+[tool.maturin]
+bindings = "bin"
+python-source = "python"
+module-name = "polars-cli"
+strip = true

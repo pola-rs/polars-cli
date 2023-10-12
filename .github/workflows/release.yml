@@ -18,6 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  PYTHON_VERSION: '3.8'
   CARGO_INCREMENTAL: 0
   CARGO_NET_RETRY: 10
   RUSTUP_MAX_RETRIES: 10
@@ -48,7 +49,45 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "is_prerelease=$IS_PRERELEASE" >> $GITHUB_OUTPUT
 
-  build-binaries:
+  create-sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.sha }}
+
+      # Avoid potential out-of-memory errors
+      - name: Set swap space for Linux
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 10
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Create source distribution
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+
+      - name: Test sdist
+        run: |
+          TOOLCHAIN=$(grep -oP 'channel = "\K[^"]+' rust-toolchain.toml)
+          rustup default $TOOLCHAIN
+          pip install --force-reinstall --verbose dist/*.tar.gz
+          polars --version
+          python -m polars-cli --version
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist/*.tar.gz
+
+  build-wheels:
     needs: get-version
     runs-on: ${{ matrix.os }}
     strategy:
@@ -58,8 +97,6 @@ jobs:
         arch: [x86_64, aarch64]
         exclude:
           - os: windows-latest
-            arch: aarch64
-          - os: ubuntu-latest
             arch: aarch64
 
     steps:
@@ -73,6 +110,11 @@ jobs:
         uses: pierotofy/set-swap-space@master
         with:
           swap-size-gb: 10
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Set Rust target
         id: target
@@ -101,12 +143,28 @@ jobs:
         if: matrix.arch == 'aarch64' && matrix.os == 'ubuntu-latest'
         run: echo "JEMALLOC_SYS_WITH_LG_PAGE=16" >> $GITHUB_ENV
 
-      - name: Build binary
-        run: cargo build --target ${{ steps.target.outputs.target }} --release
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          command: build
+          target: ${{ steps.target.outputs.target }}
+          args: >
+            --release
+            --out dist
+          manylinux: auto
 
-      - name: Test binary
+      - name: Test wheel
         if: matrix.arch == 'x86_64'
-        run: ./target/${{ steps.target.outputs.target }}/release/polars --version
+        run: |
+          pip install dist/*.whl --force-reinstall
+          polars --version
+          python -m polars-cli --version
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist/*.whl
 
       - name: Archive binary
         id: archive
@@ -122,8 +180,31 @@ jobs:
           name: binaries
           path: ${{ steps.archive.outputs.filename }}
 
+  publish-to-pypi:
+    needs: [create-sdist, build-wheels]
+    environment:
+      name: release
+      url: https://pypi.org/project/polars-cli
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download wheels
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels
+          path: dist
+
+      - name: Publish to PyPI
+        if: inputs.dry-run == false
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
+          verbose: true
+
   publish-to-crates-io:
-    needs: build-binaries
+    needs: [create-sdist, build-wheels]
     environment:
       name: release
       url: https://crates.io/crates/polars-cli
@@ -140,7 +221,7 @@ jobs:
         run: cargo publish ${{ inputs.dry-run && '--dry-run' || '' }}
 
   publish-to-github:
-    needs: [publish-to-crates-io, get-version]
+    needs: [publish-to-pypi, publish-to-crates-io, get-version]
     environment:
       name: release
       url: https://github.com/pola-rs/polars-cli/releases

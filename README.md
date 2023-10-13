@@ -1,7 +1,7 @@
 # Polars CLI
 
 [![Crates.io](https://img.shields.io/crates/v/polars-cli)](https://crates.io/crates/polars-cli)
-[![PyPI - Version](https://img.shields.io/pypi/v/polars-cli)](https://pypi.org/project/polars-cli/)
+[![PyPI](https://img.shields.io/pypi/v/polars-cli)](https://pypi.org/project/polars-cli/)
 
 The Polars command line interface provides a convenient way to execute SQL commands using Polars as a backend.
 

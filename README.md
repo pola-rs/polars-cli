@@ -1,32 +1,37 @@
 # Polars CLI
 
+[![Crates.io](https://img.shields.io/crates/v/polars-cli)](https://crates.io/crates/polars-cli)
+[![PyPI](https://img.shields.io/pypi/v/polars-cli)](https://pypi.org/project/polars-cli/)
+
+The Polars command line interface provides a convenient way to execute SQL commands using Polars as a backend.
+
 ## Installation
 
-Until binaries are available, the only way to install the Polars CLI is by building it from source:
+The recommended way to install the Polars CLI is by using [pip](https://pip.pypa.io/):
 
 ```bash
-cargo +nightly install --locked polars-cli
+pip install polars-cli
 ```
 
-Alternatively, clone the repository and install the latest version on the main branch:
+This will install a pre-compiled binary and make it available on your path under `polars`.
+If you do not have Python available, you can download a suitable binary from the most recent [GitHub release](https://github.com/pola-rs/polars-cli/releases/latest/).
+
+Alternatively, you can install the Polars CLI using [cargo](https://doc.rust-lang.org/cargo/), which will compile the code from scratch:
 
 ```bash
-cargo install --locked --path .
+cargo install --locked polars-cli
 ```
-
-#### Prerequisites
-
-1. `rustup`: which provides the `cargo` executable. You can get it from the [official website](https://rustup.rs/).
-2. `rustup install nightly` - The `nightly` version of rust, since some of our dependencies use unstable features.
 
 ## Usage
 
+Running `polars` without any arguments will start an interactive shell in which you can run SQL commands.
+
 ```shell
 $ polars
-Polars CLI version 0.3.0
+Polars CLI version 0.4.0
 Type .help for help.
 
->> select * FROM read_csv('examples/datasets/foods1.csv');
+>> select * FROM read_csv('examples/datasets/foods.csv');
 ┌────────────┬──────────┬────────┬──────────┐
 │ category   ┆ calories ┆ fats_g ┆ sugars_g │
 │ ---        ┆ ---      ┆ ---    ┆ ---      │
@@ -44,10 +49,10 @@ Type .help for help.
 └────────────┴──────────┴────────┴──────────┘
 ```
 
-Or pipe your SQL command directly inline:
+Alternatively, SQL commands can be piped directly into the Polars CLI.
 
 ```bash
-$ echo "SELECT category FROM read_csv('examples/datasets/foods1.csv')" | polars
+$ echo "SELECT category FROM read_csv('examples/datasets/foods.csv')" | polars
 ┌────────────┐
 │ category   │
 │ ---        │
@@ -66,6 +71,8 @@ $ echo "SELECT category FROM read_csv('examples/datasets/foods1.csv')" | polars
 ```
 
 ## Features
+
+When compiling the Polars CLI from source, the following features can be enabled:
 
 | Feature   | Description                                               |
 | --------- | --------------------------------------------------------- |

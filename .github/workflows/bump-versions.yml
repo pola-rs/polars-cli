@@ -2,6 +2,7 @@ name: Bump versions
 
 on:
   workflow_dispatch:
+  pull_request:
 
 jobs:
   bump-version:
@@ -9,17 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install cargo-edit
-        run: cargo install cargo-edit --no-default-features --features "upgrade set-version"
+      # - name: Install cargo-edit
+      #   run: cargo install cargo-edit --no-default-features --features "upgrade set-version"
 
-      - name: Update dependency versions in Cargo.toml
-        run: cargo upgrade --incompatible
+      # - name: Update dependency versions in Cargo.toml
+      #   run: cargo upgrade --incompatible
 
       - name: Update dependency versions in Cargo.lock
         run: cargo update
 
-      - name: Update Polars CLI version
-        run: cargo set-version --bump minor
+      # - name: Update Polars CLI version
+      #   run: cargo set-version --bump minor
 
       - name: Get new version number from Cargo.toml
         id: version
@@ -43,8 +44,7 @@ jobs:
 
       - name: Open pull request
         env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        shell: bash
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh pr create \
           --head 'release/${{ steps.version.outputs.version }}' \

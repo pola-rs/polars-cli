@@ -2,6 +2,7 @@ name: Bump versions
 
 on:
   workflow_dispatch:
+  pull_request:
 
 jobs:
   bump-version:
@@ -34,9 +35,16 @@ jobs:
           default_author: github_actions
           new_branch: release/${{ steps.version.outputs.version }}
 
+      - name: Generate GitHub token
+        uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.CI_APP_ID }}
+          private_key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
       - name: Open pull request
         env:
-          GH_TOKEN: ${{ secrets.DEPLOY_PAT }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         shell: bash
         run: |
           gh pr create \

@@ -22,7 +22,7 @@ sqlparser = { version = "0.38" }
 tmp_env = { version = "0.1" }
 
 [dependencies.polars]
-version = ">=0.33.0"
+version = "0.33"
 features = ["lazy", "sql", "dtype-full", "serde-lazy"]
 
 [target.'cfg(target_os = "linux")'.dependencies]

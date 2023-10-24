@@ -246,7 +246,7 @@ jobs:
           tag: ${{ needs.get-version.outputs.version }}
           version: ${{ needs.get-version.outputs.version }}
           prerelease: ${{ needs.get-version.outputs.is-prerelease }}
-          commitish: ${{ inputs.sha }}
+          commitish: ${{ inputs.sha || github.sha }}
           disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2,6 +2,15 @@ name: Bump versions
 
 on:
   workflow_dispatch:
+    inputs:
+      version-type:
+        description: Version type
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: minor
 
 jobs:
   bump-version:
@@ -19,7 +28,7 @@ jobs:
         run: cargo update
 
       - name: Update Polars CLI version
-        run: cargo set-version --bump minor
+        run: cargo set-version --bump ${{ inputs.version-type }}
 
       - name: Get new version number from Cargo.toml
         id: version

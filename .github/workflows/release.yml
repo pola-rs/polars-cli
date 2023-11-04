@@ -151,7 +151,7 @@ jobs:
           args: >
             --release
             --out dist
-          manylinux: auto
+          manylinux: '2_28'
 
       - name: Test wheel
         if: matrix.arch == 'x86_64'

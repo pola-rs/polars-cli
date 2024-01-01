@@ -82,7 +82,7 @@ jobs:
           python -m polars-cli --version
 
       - name: Upload sdist
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wheels
           path: dist/*.tar.gz
@@ -161,7 +161,7 @@ jobs:
           python -m polars-cli --version
 
       - name: Upload wheel
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wheels
           path: dist/*.whl
@@ -175,7 +175,7 @@ jobs:
           echo "filename=$ARCHIVE_FILENAME" >> $GITHUB_OUTPUT
 
       - name: Upload binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries
           path: ${{ steps.archive.outputs.filename }}

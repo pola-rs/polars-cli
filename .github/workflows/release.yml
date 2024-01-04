@@ -84,7 +84,7 @@ jobs:
       - name: Upload sdist
         uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: dist-sdist
           path: dist/*.tar.gz
 
   build-wheels:
@@ -163,7 +163,7 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: dist-wheel-${{ matrix.os }}-${{ matrix.arch }}
           path: dist/*.whl
 
       - name: Archive binary
@@ -177,7 +177,7 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: binaries
+          name: binary-${{ matrix.os }}-${{ matrix.arch }}
           path: ${{ steps.archive.outputs.filename }}
 
   publish-to-pypi:
@@ -190,11 +190,12 @@ jobs:
       id-token: write
 
     steps:
-      - name: Download wheels
-        uses: actions/download-artifact@v3
+      - name: Download sdist and wheels
+        uses: actions/download-artifact@v4
         with:
-          name: wheels
+          pattern: dist-*
           path: dist
+          merge-multiple: true
 
       - name: Publish to PyPI
         if: inputs.dry-run == false
@@ -232,10 +233,11 @@ jobs:
           ref: ${{ inputs.sha }}
 
       - name: Download binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: binaries
+          pattern: binary-*
           path: binaries
+          merge-multiple: true
 
       - name: Create GitHub release
         id: github-release

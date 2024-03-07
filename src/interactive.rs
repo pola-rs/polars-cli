@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use clap::crate_version;
 use once_cell::sync::Lazy;
 use polars::df;
-use polars::prelude::{DataFrame, *};
+use polars::prelude::*;
 use polars::sql::SQLContext;
 use reedline::{FileBackedHistory, Reedline, Signal};
 

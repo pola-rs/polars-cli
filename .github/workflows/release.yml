@@ -205,25 +205,25 @@ jobs:
           skip-existing: true
           verbose: true
 
-  # publish-to-crates-io:
-  #   needs: [create-sdist, build-wheels]
-  #   environment:
-  #     name: release
-  #     url: https://crates.io/crates/polars-cli
-  #   runs-on: ubuntu-latest
+  publish-to-crates-io:
+    needs: [create-sdist, build-wheels]
+    environment:
+      name: release
+      url: https://crates.io/crates/polars-cli
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         ref: ${{ inputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.sha }}
 
-  #     - name: Publish to crates.io
-  #       env:
-  #         CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-  #       run: cargo publish ${{ inputs.dry-run && '--dry-run' || '' }}
+      - name: Publish to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish ${{ inputs.dry-run && '--dry-run' || '' }}
 
   publish-to-github:
-    needs: [publish-to-pypi, get-version]
+    needs: [publish-to-pypi, publish-to-crates-io, get-version]
     environment:
       name: release
       url: https://github.com/pola-rs/polars-cli/releases

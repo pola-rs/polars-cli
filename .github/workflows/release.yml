@@ -154,7 +154,8 @@ jobs:
           manylinux: '2_28'
 
       - name: Test wheel
-        if: matrix.arch == 'x86_64'
+        # Only test wheels that match the runner architecture for now
+        if: (matrix.arch == 'x86_64' && matrix.os != 'macos-latest') || (matrix.arch == 'aarch64' && matrix.os == 'macos-latest')
         run: |
           pip install dist/*.whl --force-reinstall
           polars --version

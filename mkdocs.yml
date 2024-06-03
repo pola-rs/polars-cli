@@ -1,0 +1,25 @@
+# Project information
+site_name: Polars Cli user guide
+# site_url: https://docs.pola.rs/ <configure later>
+repo_url: https://github.com/pola-rs/polars-cli
+repo_name: pola-rs/polars-cli
+
+
+theme:
+  name: material
+  locale: en
+  custom_dir: docs/_build/overrides
+  palette:
+  # Palette toggle for light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  # Palette toggle for dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode
+  logo: _build/assets/logo.png

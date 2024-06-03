@@ -5,7 +5,10 @@ mod prompt;
 
 #[cfg(target_os = "linux")]
 use jemallocator::Jemalloc;
-use polars::prelude::*;
+use polars::prelude::{
+    CsvWriter, DslPlan, IdxSize, IpcWriter, JsonWriter, ParquetWriter, PlHashMap, PlIndexMap,
+    SerWriter,
+};
 use serde::{Deserialize, Serialize};
 
 #[global_allocator]
@@ -114,7 +117,7 @@ impl FromStr for OutputMode {
 
 #[derive(Serialize, Deserialize)]
 struct SerializableContext {
-    table_map: PlIndexMap<String, LogicalPlan>,
+    table_map: PlIndexMap<String, DslPlan>,
     tables: Vec<String>,
 }
 

@@ -159,14 +159,14 @@ pub(super) fn run_tty(output_mode: OutputMode) -> std::io::Result<()> {
     println!("Type .help for help.");
 
     let prompt = SQLPrompt {};
-    let mut is_exit_cmd = false;
+    let mut prev_was_ctrl_c = false;
     let mut scratch = String::with_capacity(1024);
 
     loop {
         let sig = line_editor.read_line(&prompt);
         match sig {
             Ok(Signal::Success(buffer)) => {
-                is_exit_cmd = false;
+                prev_was_ctrl_c = false;
                 match buffer.as_str() {
                     special_cmd if buffer.starts_with('.') => {
                         let cmd: PolarsCommand = special_cmd
@@ -194,15 +194,18 @@ pub(super) fn run_tty(output_mode: OutputMode) -> std::io::Result<()> {
                     },
                 }
             },
-            Ok(Signal::CtrlD) | Ok(Signal::CtrlC) => {
-                if is_exit_cmd {
+            Ok(Signal::CtrlC) => {
+                if prev_was_ctrl_c {
                     break;
                 } else {
-                    is_exit_cmd = true;
+                    prev_was_ctrl_c = true;
                 }
             },
+            Ok(Signal::CtrlD) => {
+                break;
+            },
             _ => {
-                is_exit_cmd = false;
+                prev_was_ctrl_c = false;
             },
         }
     }

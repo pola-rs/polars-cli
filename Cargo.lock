@@ -1279,7 +1279,7 @@ dependencies = [
 
 [[package]]
 name = "polars-cli"
-version = "0.8.0"
+version = "0.9.0"
 dependencies = [
  "atty",
  "ciborium",
@@ -1290,7 +1290,7 @@ dependencies = [
  "polars",
  "reedline",
  "serde",
- "sqlparser",
+ "sqlparser 0.53.0",
  "tmp_env",
 ]
 
@@ -1678,7 +1678,7 @@ dependencies = [
  "rand",
  "serde",
  "serde_json",
- "sqlparser",
+ "sqlparser 0.52.0",
 ]
 
 [[package]]
@@ -2143,6 +2143,15 @@ name = "sqlparser"
 version = "0.52.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a875d8cd437cc8a97e9aeaeea352ec9a19aea99c23e9effb17757291de80b08"
+dependencies = [
+ "log",
+]
+
+[[package]]
+name = "sqlparser"
+version = "0.53.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "05a528114c392209b3264855ad491fcce534b94a38771b0a0b97a79379275ce8"
 dependencies = [
  "log",
 ]

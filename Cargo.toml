@@ -16,13 +16,13 @@ ciborium = { version = "0.2" }
 clap = { version = "4", features = ["derive", "cargo"] }
 nu-ansi-term = { version = "0.50", optional = true }
 once_cell = { version = "1" }
-reedline = { version = "0.32" }
+reedline = { version = "0.38" }
 serde = { version = "1", features = ["derive"] }
-sqlparser = { version = "0.47" }
+sqlparser = { version = "0.52" }
 tmp_env = { version = "0.1" }
 
 [dependencies.polars]
-version = "0.40"
+version = "0.45"
 features = ["lazy", "sql", "dtype-full", "serde-lazy"]
 
 [target.'cfg(target_os = "linux")'.dependencies]

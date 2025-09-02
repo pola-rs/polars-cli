@@ -34,7 +34,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       is-prerelease: ${{ steps.version.outputs.is_prerelease }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.sha }}
       - name: Get version from Cargo.toml
@@ -52,7 +52,7 @@ jobs:
   create-sdist:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.sha }}
 
@@ -100,7 +100,7 @@ jobs:
             arch: aarch64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.sha }}
 
@@ -213,7 +213,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.sha }}
 
@@ -229,7 +229,7 @@ jobs:
       url: https://github.com/pola-rs/polars-cli/releases
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.sha }}
 

@@ -16,7 +16,7 @@ jobs:
   bump-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install cargo-edit
         run: cargo install cargo-edit --no-default-features --features "upgrade set-version"
